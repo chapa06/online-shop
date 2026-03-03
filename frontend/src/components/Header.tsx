@@ -18,7 +18,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onNavigate, currentPa
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-350 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-row items-center justify-between h-[84px]">
           
           <a href="/" className='flex flex-row items-center gap-1 font-semibold text-xl shrink-0'>
@@ -44,7 +44,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onNavigate, currentPa
 
           <div className='flex flex-row items-center gap-2 sm:gap-4'>
             <button className='p-2 hover:bg-gray-100 rounded-full transition-colors'>
-              <img src="../src/assets/lupa.png" alt="Search" className='size-5' />
+              <img src="../src/assets/lupa.svg" alt="Search" className='size-5' />
             </button>
             
             <a className='p-2 hover:bg-gray-100 rounded-full transition-colors relative cursor-pointer'>
@@ -58,7 +58,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onNavigate, currentPa
 
             <button className="lg:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                   <img 
-                    src={"../src/assets/menu.png"} 
+                    src={"../src/assets/menu.svg"} 
                     alt="Menu Toggle" 
                     className="size-6" 
                   />

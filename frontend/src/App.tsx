@@ -1,12 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [currentPage, setCurrentPage] = useState('shop')
+  const [count, setCount] = useState(() => {
+    const savedCart = localStorage.getItem('paws_cart_count');
+    return savedCart ? parseInt(savedCart, 10) : 0;
+  });
+  const [currentPage, setCurrentPage] = useState('shop');
+  useEffect(() => {
+    localStorage.setItem('paws_cart_count', count.toString());
+  }, [count]);
 
   const handleNavigate = (page: string) => {
     setCurrentPage(page);
@@ -14,8 +20,7 @@ function App() {
   };
 
   return (
-    /* flex flex-col min-h-screen — растягиваем приложение на весь экран */
-    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans">
+    <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900 font-sans">
       
       <Header 
         cartCount={count} 
@@ -23,10 +28,8 @@ function App() {
         onNavigate={handleNavigate} 
       />
 
-      {/* Основной контент */}
       <main className="container mx-auto px-4 py-16 flex flex-col items-center text-center">
         
-        {/* Логотипы */}
         <div className="flex justify-center gap-8 mb-8">
           <a href="https://vite.dev" target="_blank" className="transition-transform hover:scale-110">
             <img src={viteLogo} className="h-20 w-20 drop-shadow-[0_0_2em_#646cffaa]" alt="Vite logo" />
@@ -40,7 +43,6 @@ function App() {
           Vite <span className="text-indigo-500">+</span> React
         </h1>
 
-        {/* Карточка с кнопкой */}
         <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 max-w-sm w-full">
           <button 
             onClick={() => setCount((count) => count + 1)}
@@ -48,16 +50,22 @@ function App() {
           >
             В корзине: {count} товаров
           </button>
-          <p className="text-gray-600 text-sm">
-            Нажми на кнопку выше, чтобы имитировать добавление товара. Данные синхронизируются с Хедером.
+          
+          {/* Добавим кнопку сброса, чтобы тестировать было удобнее */}
+          <button 
+            onClick={() => setCount(0)}
+            className="text-xs text-red-400 hover:text-red-600 transition-colors underline"
+          >
+            Очистить корзину
+          </button>
+          
+          <p className="text-gray-600 text-sm mt-4">
+            Данные теперь сохраняются! Попробуй обновить страницу (F5).
           </p>
         </div>
-
-        <p className="mt-12 text-gray-400 text-sm italic">
-          Отредактируй <code className="font-mono text-indigo-400">src/App.tsx</code> чтобы увидеть изменения.
-        </p>    
       </main>
-    <Footer/>
+
+      <Footer/>
     </div>
   )
 }
