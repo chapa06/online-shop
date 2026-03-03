@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { Header } from './components/Header'
+import { Footer } from './components/Footer'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -54,8 +55,9 @@ function App() {
 
         <p className="mt-12 text-gray-400 text-sm italic">
           Отредактируй <code className="font-mono text-indigo-400">src/App.tsx</code> чтобы увидеть изменения.
-        </p>
+        </p>    
       </main>
+    <Footer/>
     </div>
   )
 }
