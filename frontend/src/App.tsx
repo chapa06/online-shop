@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
-
+import { Hero } from './components/Hero'
 function App() {
   const [count, setCount] = useState(() => {
     const savedCart = localStorage.getItem('paws_cart_count');
@@ -21,13 +21,13 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900 font-sans">
-      
       <Header 
         cartCount={count} 
         currentPage={currentPage} 
         onNavigate={handleNavigate} 
-      />
+        />
 
+      <Hero/>
       <main className="container mx-auto px-4 py-16 flex flex-col items-center text-center">
         
         <div className="flex justify-center gap-8 mb-8">

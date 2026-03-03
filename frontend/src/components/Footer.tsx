@@ -3,9 +3,9 @@ export const Footer: React.FC = () => {
   return (
     <footer className="bg-[#0A1128] text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                <div className='grid grid-cols-1 gap-4'>
-                <a href="/" className='flex flex-row items-center gap-1 font-semibold text-xl shrink-0'>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-8">
+                <div className=''>
+                <a href="/" className='flex flex-row items-center gap-1 font-semibold text-xl shrink-0 mb-4'>
                      <img src="../src/assets/logo.png" alt="Logo" className='size-10' />
                      <span>PawsStore</span>
                 </a>
@@ -33,8 +33,8 @@ export const Footer: React.FC = () => {
                 </div>
 
                 <div>
-                    <h3 className="text-lg font-bold mb-6">Newsletter</h3>
-                    <p className='text-gray-400 text-sm leading-relaxed text-left mb-6'>Subscribe to get special offers and updates.</p>
+                    <h3 className="text-lg font-semibold mb-4">Newsletter</h3>
+                    <p className='text-gray-400 text-sm mb-4 xl:whitespace-nowrap'>Subscribe to get special offers and updates.</p>
                     <div className='flex flex-row gap-2'>
                         <input type="email" placeholder="Your email" className="flex-1 px-3 py-2.5 bg-gray-800 border border-gray-700 rounded text-sm focus:outline-none focus:border-orange-500 text-white"/>
                         <button className="px-3 py-2.5 bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors flex items-center justify-center shrink-0">
