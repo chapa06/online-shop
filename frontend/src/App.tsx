@@ -3,15 +3,16 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Sidebar } from './components/Sidebar';
 import { ProductCard } from './components/ProductCard';
+import { ProductDetail } from './components/ProductDetail';
 import { Footer } from './components/Footer';
 import { PRODUCTS } from './constants';
-import type { FilterState, Product } from './types';
+import type { FilterState, Product, CartItem } from './types';
 import { ChevronDown, Search, SlidersHorizontal, Check } from 'lucide-react';
-
-type SortOption = 'name-asc' | 'name-desc' | 'price-asc' | 'price-desc';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('shop');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [filters, setFilters] = useState<FilterState>({
     rating: [],
@@ -19,7 +20,7 @@ export default function App() {
     sortBy: 'name-asc'
   });
 
-  const sortOptions: { id: SortOption; label: string }[] = [
+  const sortOptions = [
     { id: 'name-asc', label: 'Name (A-Z)' },
     { id: 'name-desc', label: 'Name (Z-A)' },
     { id: 'price-asc', label: 'Price (Low to High)' },
@@ -46,43 +47,35 @@ export default function App() {
     return result;
   }, [filters]);
 
+  const handleAddToCart = (product: Product, quantity: number) => {
+    setCart(prev => {
+      const existing = prev.find(item => item.id === product.id);
+      if (existing) {
+        return prev.map(item => item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item);
+      }
+      return [...prev, { ...product, quantity }];
+    });
+  };
+
   const handleNavigate = (page: string) => {
     setCurrentPage(page);
+    setSelectedProduct(null);
     window.scrollTo(0, 0);
   };
 
-  const handleAddToCart = (product: Product) => {
-    // Временная заглушка для добавления в корзину
-    console.log('Added to cart:', product);
-  };
-
-  const handleRatingChange = (rating: number) => {
-    setFilters(prev => ({
-      ...prev,
-      rating: prev.rating.includes(rating) 
-        ? prev.rating.filter(r => r !== rating) 
-        : [...prev.rating, rating]
-    }));
-  };
-
-  const handlePriceChange = (min: number | null, max: number | null) => {
-    setFilters(prev => ({
-      ...prev,
-      priceRange: [min || 0, max || 1000]
-    }));
-  };
-
-  const handleSortChange = (sortBy: SortOption) => {
-    setFilters(prev => ({
-      ...prev,
-      sortBy
-    }));
-    setIsSortOpen(false);
+  const handleProductClick = (product: Product) => {
+    setSelectedProduct(product);
+    setCurrentPage('product-detail');
+    window.scrollTo(0, 0);
   };
 
   const renderPage = () => {
+    if (currentPage === 'product-detail' && selectedProduct) {
+      return <ProductDetail product={selectedProduct} onAddToCart={handleAddToCart} />;
+    }
+
     switch (currentPage) {
-      case 'shop':
+    case 'shop':
       default:
         return (
           <>
@@ -90,8 +83,11 @@ export default function App() {
             <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
               <div className="flex flex-col lg:flex-row gap-12">
                 <Sidebar 
-                  onRatingChange={handleRatingChange}
-                  onPriceChange={handlePriceChange}
+                  onRatingChange={(rating) => setFilters(prev => ({
+                    ...prev,
+                    rating: prev.rating.includes(rating) ? prev.rating.filter(r => r !== rating) : [...prev.rating, rating]
+                  }))}
+                  onPriceChange={(min, max) => setFilters(prev => ({ ...prev, priceRange: [min || 0, max || 1000] }))}
                 />
                 
                 <div className="flex-1">
@@ -122,7 +118,10 @@ export default function App() {
                             {sortOptions.map(option => (
                               <button
                                 key={option.id}
-                                onClick={() => handleSortChange(option.id)}
+                                onClick={() => {
+                                  setFilters(prev => ({ ...prev, sortBy: option.id }));
+                                  setIsSortOpen(false);
+                                }}
                                 className={`w-full flex items-center justify-between px-4 py-3 text-sm transition-colors ${
                                   filters.sortBy === option.id 
                                     ? 'bg-gray-50 text-orange-500 font-bold' 
@@ -142,11 +141,8 @@ export default function App() {
                   {filteredProducts.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
                       {filteredProducts.map(product => (
-                        <div key={product.id}>
-                          <ProductCard 
-                            product={product} 
-                            onAddToCart={() => handleAddToCart(product)} 
-                          />
+                        <div key={product.id} onClick={() => handleProductClick(product)} className="cursor-pointer">
+                          <ProductCard product={product} onAddToCart={handleAddToCart} />
                         </div>
                       ))}
                     </div>
@@ -170,7 +166,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header 
-        cartCount={0}
+        cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)} 
         onNavigate={handleNavigate}
         currentPage={currentPage}
       />
