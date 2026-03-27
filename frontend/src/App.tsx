@@ -4,6 +4,7 @@ import { Hero } from './components/Hero';
 import { Sidebar } from './components/Sidebar';
 import { ProductCard } from './components/ProductCard';
 import { ProductDetail } from './components/ProductDetail';
+import { Cart } from './components/Cart';
 import { Footer } from './components/Footer';
 import { PRODUCTS } from './constants';
 import type { FilterState, Product, CartItem } from './types';
@@ -57,6 +58,16 @@ export default function App() {
     });
   };
 
+  const handleUpdateQuantity = (id: string, delta: number) => {
+    setCart(prev => prev.map(item => 
+      item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item
+    ));
+  };
+
+  const handleRemoveFromCart = (id: string) => {
+    setCart(prev => prev.filter(item => item.id !== id));
+  };
+
   const handleNavigate = (page: string) => {
     setCurrentPage(page);
     setSelectedProduct(null);
@@ -75,7 +86,9 @@ export default function App() {
     }
 
     switch (currentPage) {
-    case 'shop':
+      case 'cart':
+        return <Cart items={cart} onUpdateQuantity={handleUpdateQuantity} onRemove={handleRemoveFromCart}  onNavigate={handleNavigate}/>;
+      case 'shop':
       default:
         return (
           <>

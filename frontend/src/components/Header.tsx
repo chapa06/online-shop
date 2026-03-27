@@ -47,15 +47,18 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onNavigate, currentPa
               <img src="../src/assets/lupa.svg" alt="Search" className='size-5' />
             </button>
             
-            <a className='p-2 hover:bg-gray-100 rounded-full transition-colors relative cursor-pointer'>
+              <button
+                onClick={() => onNavigate('cart')}
+                className='p-2 hover:bg-gray-100 rounded-full transition-colors relative cursor-pointer'
+                >
+
               <img src="../src/assets/cart.png" alt="Cart" className='size-5' />
               {cartCount > 0 && (
                 <span className="absolute top-0 right-0 bg-orange-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
-            </a>
-
+            </button> 
             <button className="lg:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                   <img 
                     src={"../src/assets/menu.svg"} 
