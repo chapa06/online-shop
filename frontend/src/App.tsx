@@ -6,6 +6,7 @@ import { ProductCard } from './components/ProductCard';
 import { ProductDetail } from './components/ProductDetail';
 import { Cart } from './components/Cart';
 import { Footer } from './components/Footer';
+import { About } from './components/About';
 import { PRODUCTS } from './constants';
 import type { FilterState, Product, CartItem } from './types';
 import { ChevronDown, Search, SlidersHorizontal, Check } from 'lucide-react';
@@ -88,6 +89,8 @@ export default function App() {
     switch (currentPage) {
       case 'cart':
         return <Cart items={cart} onUpdateQuantity={handleUpdateQuantity} onRemove={handleRemoveFromCart}  onNavigate={handleNavigate}/>;
+      case 'about':
+        return <About />;
       case 'shop':
       default:
         return (
