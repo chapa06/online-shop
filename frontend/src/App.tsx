@@ -5,6 +5,7 @@ import { Sidebar } from './components/Sidebar';
 import { ProductCard } from './components/ProductCard';
 import { ProductDetail } from './components/ProductDetail';
 import { Cart } from './components/Cart';
+import { Categories } from './components/Categories';
 import { Footer } from './components/Footer';
 import { About } from './components/About';
 import { PRODUCTS } from './constants';
@@ -91,6 +92,8 @@ export default function App() {
         return <Cart items={cart} onUpdateQuantity={handleUpdateQuantity} onRemove={handleRemoveFromCart}  onNavigate={handleNavigate}/>;
       case 'about':
         return <About />;
+      case 'categories':
+        return <Categories />;
       case 'shop':
       default:
         return (
