@@ -10,7 +10,7 @@ interface ProductDetailProps {
 export const ProductDetail: React.FC<ProductDetailProps> = ({ product, onAddToCart }) => {
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
-  const images = product.images || [product.image];
+  const images = product.images;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -18,7 +18,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ product, onAddToCa
       <nav className="flex items-center gap-2 text-sm text-gray-500 mb-8">
         <a href="#" className="hover:text-orange-500">Home</a>
         <ChevronRight className="w-4 h-4" />
-        <a href="#" className="hover:text-orange-500">{product.category}</a>
+        <a href="#" className="hover:text-orange-500">{product.category?.name || 'Uncategorized'}</a>
         <ChevronRight className="w-4 h-4" />
         <span className="text-gray-900 font-medium">{product.name}</span>
       </nav>
@@ -63,7 +63,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ product, onAddToCa
         <div className="space-y-8">
           <div>
             <span className="inline-block bg-orange-100 text-orange-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">
-              {product.category}
+              {product.category?.name || 'Uncategorized'}
             </span>
             <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
             <div className="flex items-center gap-2 mb-6">
@@ -80,29 +80,9 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ product, onAddToCa
               </div>
               <span className="text-sm text-gray-500">{product.rating} out of 5 stars</span>
             </div>
-            <div className="text-3xl font-bold text-orange-500">${product.price.toFixed(2)}</div>
+            <div className="text-3xl font-bold text-orange-500">${Number(product.price).toFixed(2)}</div>
           </div>
 
-          {product.highlights && (
-            <div className="bg-orange-50 p-6 rounded-2xl">
-              <h3 className="font-bold text-gray-900 mb-4">Key Highlights</h3>
-              <ul className="space-y-2">
-                {product.highlights.map((h, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-gray-700">
-                    <div className="w-1.5 h-1.5 bg-orange-500 rounded-full" />
-                    {h}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <div className="space-y-4">
-            <h3 className="font-bold text-gray-900">Description</h3>
-            <p className="text-gray-600 leading-relaxed">
-              {product.description || 'No description available for this product.'}
-            </p>
-          </div>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <div className="flex items-center border border-gray-200 rounded-xl p-1 bg-gray-50">

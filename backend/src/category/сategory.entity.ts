@@ -6,10 +6,10 @@ export class Category {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ length: 255, nullable: true })
   name: string;
 
-  @Column()
+  @Column({ length: 500, nullable: true })
   image: string;
 
   @OneToMany(() => Product, (product) => product.category)

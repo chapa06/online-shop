@@ -5,3 +5,7 @@
 docker-compose.yaml
 /backend/Dockerfile
 /frontend/Dockerfile
+/backend/import-data.json
+/init-db
+/postgres-data
+/backend/test

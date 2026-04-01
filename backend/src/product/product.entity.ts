@@ -11,13 +11,13 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ length: 255, nullable: false })
   name: string;
 
-  @Column('float')
+  @Column('decimal', { precision: 10, scale: 2, nullable: false })
   price: number;
 
-  @Column('float')
+  @Column('decimal', { precision: 3, scale: 1, nullable: true })
   rating: number;
 
   @ManyToOne(() => Category, (category) => category.products, {
@@ -25,7 +25,7 @@ export class Product {
   })
   category: Category;
 
-  @Column('text', { array: true, default: [] })
+  @Column({ type: 'jsonb', default: [] })
   images: string[];
 
   @Column({ type: 'jsonb', nullable: true })

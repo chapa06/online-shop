@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Sidebar } from './components/Sidebar';
@@ -8,7 +8,7 @@ import { Cart } from './components/Cart';
 import { Categories } from './components/Categories';
 import { Footer } from './components/Footer';
 import { About } from './components/About';
-import { PRODUCTS } from './constants';
+import { api } from './services/api';
 import type { FilterState, Product, CartItem } from './types';
 import { ChevronDown, Search, SlidersHorizontal, Check } from 'lucide-react';
 
@@ -17,11 +17,32 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isSortOpen, setIsSortOpen] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<FilterState>({
     rating: [],
     priceRange: [0, 1000],
     sortBy: 'name-asc'
   });
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const data = await api.getProducts();
+        setProducts(data);
+        setError(null);
+      } catch (err) {
+        setError('Failed to load products');
+        console.error('Error fetching products:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const sortOptions = [
     { id: 'name-asc', label: 'Name (A-Z)' },
@@ -31,24 +52,24 @@ export default function App() {
   ];
 
   const filteredProducts = useMemo(() => {
-    let result = [...PRODUCTS];
+    let result = [...products];
 
     if (filters.rating.length > 0) {
       result = result.filter(p => filters.rating.some(r => p.rating >= r));
     }
 
-    result = result.filter(p => p.price >= filters.priceRange[0] && p.price <= filters.priceRange[1]);
+    result = result.filter(p => Number(p.price) >= filters.priceRange[0] && Number(p.price) <= filters.priceRange[1]);
 
     result.sort((a, b) => {
       if (filters.sortBy === 'name-asc') return a.name.localeCompare(b.name);
       if (filters.sortBy === 'name-desc') return b.name.localeCompare(a.name);
-      if (filters.sortBy === 'price-asc') return a.price - b.price;
-      if (filters.sortBy === 'price-desc') return b.price - a.price;
+      if (filters.sortBy === 'price-asc') return Number(a.price) - Number(b.price);
+      if (filters.sortBy === 'price-desc') return Number(b.price) - Number(a.price);
       return 0;
     });
 
     return result;
-  }, [filters]);
+  }, [filters, products]);
 
   const handleAddToCart = (product: Product, quantity: number) => {
     setCart(prev => {
@@ -60,13 +81,13 @@ export default function App() {
     });
   };
 
-  const handleUpdateQuantity = (id: string, delta: number) => {
+  const handleUpdateQuantity = (id: number, delta: number) => {
     setCart(prev => prev.map(item => 
       item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item
     ));
   };
 
-  const handleRemoveFromCart = (id: string) => {
+  const handleRemoveFromCart = (id: number) => {
     setCart(prev => prev.filter(item => item.id !== id));
   };
 
@@ -138,7 +159,7 @@ export default function App() {
                               <button
                                 key={option.id}
                                 onClick={() => {
-                                  setFilters(prev => ({ ...prev, sortBy: option.id }));
+                                  setFilters(prev => ({ ...prev, sortBy: option.id as FilterState['sortBy'] }));
                                   setIsSortOpen(false);
                                 }}
                                 className={`w-full flex items-center justify-between px-4 py-3 text-sm transition-colors ${

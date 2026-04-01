@@ -18,7 +18,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }
     >
       <div className="relative aspect-[4/5] overflow-hidden">
         <img
-          src={product.image}
+          src={product.images[0]}
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           referrerPolicy="no-referrer"
@@ -44,7 +44,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }
           
           <div className="flex items-center justify-between">
             <div className="text-2xl font-black text-orange-500">
-              ${product.price.toFixed(2)}
+              ${Number(product.price).toFixed(2)}
             </div>
             <motion.button 
               whileHover={{ scale: 1.1 }}
@@ -62,7 +62,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }
 
         {/* Static Price Badge (Visible when not hovered) */}
         <div className="absolute top-4 right-4 bg-orange-500 text-white font-black px-3 py-1.5 rounded-full shadow-lg group-hover:opacity-0 transition-opacity duration-300">
-          ${product.price.toFixed(2)}
+          ${Number(product.price).toFixed(2)}
         </div>
       </div>
       

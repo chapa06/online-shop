@@ -5,8 +5,8 @@ import { Trash2, Minus, Plus, Tag, ChevronRight, CheckCircle2, ShoppingCart } fr
 
 interface CartProps {
   items: CartItem[];
-  onUpdateQuantity: (id: string, delta: number) => void;
-  onRemove: (id: string) => void;
+  onUpdateQuantity: (id: number, delta: number) => void;
+  onRemove: (id: number) => void;
   onNavigate: (page: string) => void;
 }
 export const Cart: React.FC<CartProps> = ({ items, onNavigate, onUpdateQuantity, onRemove }) => {
@@ -96,13 +96,13 @@ export const Cart: React.FC<CartProps> = ({ items, onNavigate, onUpdateQuantity,
                 className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col sm:flex-row gap-6"
               >
                 <div className="w-full sm:w-32 h-32 rounded-xl overflow-hidden flex-shrink-0">
-                  <img src={item.image} alt={item.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="text-lg font-bold text-gray-900 mb-1">{item.name}</h3>
-                      <p className="text-sm text-gray-500">{item.category}</p>
+                      <p className="text-sm text-gray-500">{item.category?.name || 'Uncategorized'}</p>
                     </div>
                     <button 
                       onClick={() => onRemove(item.id)}
@@ -128,8 +128,8 @@ export const Cart: React.FC<CartProps> = ({ items, onNavigate, onUpdateQuantity,
                       </button>
                     </div>
                     <div className="text-right">
-                      <div className="text-xl font-bold text-orange-500">${(item.price * item.quantity).toFixed(2)}</div>
-                      <div className="text-xs text-gray-400">${item.price.toFixed(2)} each</div>
+                      <div className="text-xl font-bold text-orange-500">${(Number(item.price) * item.quantity).toFixed(2)}</div>
+                      <div className="text-xs text-gray-400">${Number(item.price).toFixed(2)} each</div>
                     </div>
                   </div>
                 </div>
