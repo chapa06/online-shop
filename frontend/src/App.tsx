@@ -8,6 +8,7 @@ import { Cart } from './components/Cart';
 import { Categories } from './components/Categories';
 import { Footer } from './components/Footer';
 import { About } from './components/About';
+import { Deals } from './components/Deals';
 import { api } from './services/api';
 import type { FilterState, Product, CartItem } from './types';
 import { ChevronDown, Search, SlidersHorizontal, Check } from 'lucide-react';
@@ -115,6 +116,8 @@ export default function App() {
         return <About />;
       case 'categories':
         return <Categories />;
+      case 'deals':
+        return <Deals products={products} onProductClick={handleProductClick} onAddToCart={handleAddToCart} />;
       case 'shop':
       default:
         return (

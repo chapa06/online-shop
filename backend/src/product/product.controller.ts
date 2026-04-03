@@ -5,6 +5,9 @@ import {
   Param,
   Delete,
   Body,
+  Patch,
+  ParseBoolPipe,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 
@@ -27,8 +30,21 @@ export class ProductController {
     return this.productService.findOne(Number(id));
   }
 
+  @Patch(':id/sales')
+  updateSales(
+    @Param('id') id: string,
+    @Query('sales', ParseBoolPipe) sales: boolean,
+  ) {
+    return this.productService.updateSales(Number(id), sales);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.productService.remove(Number(id));
+  }
+
+  @Get('sales/on')
+  findOnSale() {
+    return this.productService.findOnSale();
   }
 }

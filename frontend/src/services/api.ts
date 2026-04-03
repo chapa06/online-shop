@@ -53,4 +53,22 @@ export const api = {
     }
     return response.json();
   },
+
+  async getSaleProducts(): Promise<Product[]> {
+    const response = await fetch(`${API_BASE_URL}/products/sales/on`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch sale products');
+    }
+    return response.json();
+  },
+
+  async updateProductSales(id: number, sales: boolean): Promise<Product> {
+    const response = await fetch(`${API_BASE_URL}/products/${id}/sales?sales=${sales}`, {
+      method: 'PATCH',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to update product sales status');
+    }
+    return response.json();
+  },
 };

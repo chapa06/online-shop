@@ -155,6 +155,11 @@ export const Cart: React.FC<CartProps> = ({ items, onNavigate, onUpdateQuantity,
                   className="flex-1 bg-white text-gray-900 rounded-xl px-4 py-3 text-sm focus:outline-none"
                   value={promoCode}
                   onChange={(e) => setPromoCode(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleApplyPromo();
+                    }
+                  }}
                 />
                 <button 
                   onClick={handleApplyPromo}

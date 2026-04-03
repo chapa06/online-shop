@@ -27,6 +27,7 @@ export class ProductService {
       name: dto.name,
       price: dto.price,
       rating: dto.rating,
+      sales: dto.sales || false,
       category,
       images: dto.images || [],
       specs: dto.specs || {},
@@ -46,6 +47,18 @@ export class ProductService {
       where: { id },
       relations: ['category'],
     });
+  }
+
+  findOnSale() {
+    return this.productRepo.find({
+      where: { sales: true },
+      relations: ['category'],
+    });
+  }
+
+  async updateSales(id: number, sales: boolean) {
+    await this.productRepo.update(id, { sales });
+    return this.findOne(id);
   }
 
   async remove(id: number) {

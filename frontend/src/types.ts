@@ -11,6 +11,7 @@ export interface Product {
   };
   specs?: Record<string, string>;
   discountPrice?: number;
+  sales?: boolean;
 }
 
 export interface Category {

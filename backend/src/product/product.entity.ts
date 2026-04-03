@@ -20,6 +20,9 @@ export class Product {
   @Column('decimal', { precision: 3, scale: 1, nullable: true })
   rating: number;
 
+  @Column({ type: 'boolean', default: false })
+  sales: boolean;
+
   @ManyToOne(() => Category, (category) => category.products, {
     onDelete: 'CASCADE',
   })

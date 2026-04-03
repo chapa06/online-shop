@@ -3,6 +3,8 @@ import {
   IsNumber,
   IsArray,
   IsObject,
+  IsBoolean,
+  IsOptional,
 } from 'class-validator';
 
 export class CreateProductDto {
@@ -14,6 +16,10 @@ export class CreateProductDto {
 
   @IsNumber()
   rating: number;
+
+  @IsBoolean()
+  @IsOptional()
+  sales?: boolean;
 
   @IsNumber()
   categoryId: number;
