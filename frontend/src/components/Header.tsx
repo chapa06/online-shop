@@ -22,7 +22,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onNavigate, currentPa
         <div className="flex flex-row items-center justify-between h-[84px]">
           
           <a href="/" className='flex flex-row items-center gap-1 font-semibold text-xl shrink-0'>
-            <img src="../src/assets/logo.png" alt="Logo" className='size-10' />
+            <img src="./assets/logo.png" alt="Logo" className='size-10' />
             <span>PawsStore</span>
           </a>
 
@@ -44,7 +44,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onNavigate, currentPa
 
           <div className='flex flex-row items-center gap-2 sm:gap-4'>
             <button className='p-2 hover:bg-gray-100 rounded-full transition-colors'>
-              <img src="../src/assets/lupa.svg" alt="Search" className='size-5' />
+              <img src="./assets/lupa.svg" alt="Search" className='size-5' />
             </button>
             
               <button
@@ -52,7 +52,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onNavigate, currentPa
                 className='p-2 hover:bg-gray-100 rounded-full transition-colors relative cursor-pointer'
                 >
 
-              <img src="../src/assets/cart.png" alt="Cart" className='size-5' />
+              <img src="./assets/cart.png" alt="Cart" className='size-5' />
               {cartCount > 0 && (
                 <span className="absolute top-0 right-0 bg-orange-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
                   {cartCount}
@@ -61,7 +61,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onNavigate, currentPa
             </button> 
             <button className="lg:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                   <img 
-                    src={"../src/assets/menu.svg"} 
+                    src={"./assets/menu.svg"} 
                     alt="Menu Toggle" 
                     className="size-6" 
                   />

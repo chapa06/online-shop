@@ -9,3 +9,4 @@ docker-compose.yaml
 /init-db
 /postgres-data
 /backend/test
+nginx.conf
