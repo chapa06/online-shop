@@ -6,7 +6,7 @@ export const Footer: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-8">
                 <div className=''>
                 <a href="/" className='flex flex-row items-center gap-1 font-semibold text-xl shrink-0 mb-4'>
-                     <img src="../src/assets/logo.png" alt="Logo" className='size-10' />
+                     <img src=".assets/logo.png" alt="Logo" className='size-10' />
                      <span>PawsStore</span>
                 </a>
                 <p className='text-gray-400 text-sm leading-relaxed text-left'>Your trusted source for premium pet supplies and accessories.</p>
@@ -38,7 +38,7 @@ export const Footer: React.FC = () => {
                     <div className='flex flex-row gap-2'>
                         <input type="email" placeholder="Your email" className="flex-1 px-3 py-2.5 bg-gray-800 border border-gray-700 rounded text-sm focus:outline-none focus:border-orange-500 text-white"/>
                         <button className="px-3 py-2.5 bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors flex items-center justify-center shrink-0">
-                        <img src="../src/assets/konvert.png" alt="Send" className="size-4" />
+                        <img src=".assets/konvert.png" alt="Send" className="size-4" />
                         </button>
                     </div>
                 </div>
